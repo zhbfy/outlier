@@ -1,0 +1,15 @@
+[detectors]
+Simple threshold=0
+Diff=0
+Simple MA=1
+Weighted MA=0
+MA of diff=0
+EWMA=0
+TSD=0
+TSD MAD=0
+Historical average=0
+Historical MAD=0
+Holt-Winters=0
+SVD=0
+Wavelet=0
+ARIMA=0
