@@ -1,6 +1,6 @@
 [detectors]
 Simple threshold=0
-Diff=0
+Diff=1
 Simple MA=1
 Weighted MA=0
 MA of diff=0

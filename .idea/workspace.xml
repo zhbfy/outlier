@@ -2,59 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="846c1891-451a-47c7-829f-223f22daf980" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dataSource/Test/__MACOSX/res/._.DS_Store" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dataSource/Test/__MACOSX/res/._res_101.csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dataSource/Test/__MACOSX/res/._res_103.csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dataSource/Test/__MACOSX/res/._res_105.csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dataSource/Test/__MACOSX/res/._res_106.csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dataSource/Test/__MACOSX/res/._res_108.csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dataSource/Test/__MACOSX/res/._res_112.csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dataSource/Test/__MACOSX/res/._res_113.csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dataSource/Test/__MACOSX/res/._res_115.csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dataSource/Train.rar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dataSource/Train/Train/matlab.mat" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dataSource/测试集结果_无标签.zip" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/outlierDetection.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/webResources.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dataSource/Test/res/res_101.csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dataSource/Test/res/res_102.csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dataSource/Test/res/res_103.csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dataSource/Test/res/res_104.csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dataSource/Test/res/res_105.csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dataSource/Test/res/res_106.csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dataSource/Test/res/res_107.csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dataSource/Test/res/res_108.csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dataSource/Test/res/res_109.csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dataSource/Test/res/res_110.csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dataSource/Test/res/res_111.csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dataSource/Test/res/res_112.csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dataSource/Test/res/res_113.csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dataSource/Test/res/res_114.csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dataSource/Test/res/res_115.csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dataSource/Train/Train/train101-m.csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dataSource/Train/Train/train101.csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dataSource/Train/Train/train102.csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dataSource/Train/Train/train103.csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dataSource/Train/Train/train104.csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dataSource/Train/Train/train105.csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dataSource/Train/Train/train106.csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dataSource/Train/Train/train107.csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dataSource/Train/Train/train108.csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dataSource/Train/Train/train109.csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dataSource/Train/Train/train110.csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dataSource/Train/Train/train111.csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dataSource/Train/Train/train112.csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dataSource/Train/Train/train113.csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dataSource/Train/Train/train114.csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dataSource/Train/Train/train115.csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/dataSource/detectors" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/detectors/DetectorsConfig" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/main.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/randomRorest.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/detectors/DetectorsConfig" afterPath="$PROJECT_DIR$/detectors/DetectorsConfig" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
     </list>
     <ignored path="outlierDetection.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -68,7 +18,7 @@
   </component>
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/outlierDetection$randomRorest.coverage" NAME="randomRorest Coverage Results" MODIFIED="1529510265553" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/outlierDetection$main.coverage" NAME="main Coverage Results" MODIFIED="1529552466605" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/outlierDetection$main.coverage" NAME="main Coverage Results" MODIFIED="1529606126036" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -82,11 +32,31 @@
       <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="333">
-              <caret line="112" column="26" selection-start-line="111" selection-start-column="29" selection-end-line="112" selection-end-column="26" />
+            <state relative-caret-position="456">
+              <caret line="328" column="0" selection-start-line="328" selection-start-column="0" selection-end-line="328" selection-end-column="0" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="detectors" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dataSource/detectors">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="detectors.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/detectors.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="567">
+              <caret line="21" column="37" selection-start-line="21" selection-start-column="37" selection-end-line="21" selection-end-column="37" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -104,7 +74,7 @@
       <file leaf-file-name="function_base.py" pinned="false" current-in-tab="false">
         <entry file="file://E:/anaconda/envs/python_35/Lib/site-packages/numpy/lib/function_base.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="301">
+            <state relative-caret-position="38340">
               <caret line="1452" column="4" selection-start-line="1452" selection-start-column="4" selection-end-line="1452" selection-end-column="4" />
               <folding />
             </state>
@@ -114,18 +84,8 @@
       <file leaf-file-name="train101-m.csv" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dataSource/Train/Train/train101-m.csv">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="630">
+            <state relative-caret-position="3432267">
               <caret line="127121" column="4" selection-start-line="127121" selection-start-column="0" selection-end-line="127121" selection-end-column="10" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="res_102.csv" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/dataSource/Test/res/res_102.csv">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -156,18 +116,8 @@
       <file leaf-file-name="DetectorsConfig" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/detectors/DetectorsConfig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="81">
-              <caret line="3" column="11" selection-start-line="3" selection-start-column="11" selection-end-line="3" selection-end-column="11" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="res_101.csv" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/dataSource/Test/res/res_101.csv">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="54">
+              <caret line="2" column="6" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
               <folding />
             </state>
           </provider>
@@ -176,7 +126,7 @@
       <file leaf-file-name="codecs.py" pinned="false" current-in-tab="false">
         <entry file="file://E:/anaconda/envs/python_35/Lib/codecs.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="480">
+            <state relative-caret-position="8316">
               <caret line="308" column="0" selection-start-line="308" selection-start-column="0" selection-end-line="308" selection-end-column="0" />
               <folding />
             </state>
@@ -195,11 +145,15 @@
   <component name="Git.Settings">
     <option name="ROOT_SYNC" value="DONT_SYNC" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="PUSH_TAGS">
+      <GitPushTagMode />
+    </option>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/randomRorest.py" />
+        <option value="$PROJECT_DIR$/Diff(1).py" />
         <option value="$PROJECT_DIR$/detectors/DetectorsConfig" />
         <option value="$PROJECT_DIR$/main.py" />
       </list>
@@ -242,6 +196,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -294,8 +250,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -306,6 +260,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\code-exercise\outlierDetection" />
       <recent name="E:\code-exercise\outlierDetection\dataSource" />
     </key>
   </component>
@@ -576,6 +531,21 @@
       <option name="presentableId" value="Default" />
       <updated>1529388298591</updated>
     </task>
+    <task id="LOCAL-00001" summary="initial programe">
+      <created>1529555525114</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1529555525114</updated>
+    </task>
+    <task id="LOCAL-00002" summary="finish the first coarse version, only use sim_ma 10 20 30 40 50 as feature">
+      <created>1529574213052</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1529574213052</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -584,15 +554,15 @@
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.118229166" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33084312" sideWeight="0.50208336" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33084312" sideWeight="0.5208333" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33084312" sideWeight="0.49791667" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33084312" sideWeight="0.47916666" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39297125" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39274278" sideWeight="0.62916666" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -613,6 +583,11 @@
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="initial programe" />
+    <MESSAGE value="finish the first coarse version, only use sim_ma 10 20 30 40 50 as feature" />
+    <option name="LAST_COMMIT_MESSAGE" value="finish the first coarse version, only use sim_ma 10 20 30 40 50 as feature" />
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
@@ -622,26 +597,84 @@
           <option name="timeStamp" value="4" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/main.py</url>
-          <line>114</line>
-          <option name="timeStamp" value="5" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/randomRorest.py</url>
           <line>16</line>
           <option name="timeStamp" value="7" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/main.py</url>
-          <line>58</line>
-          <option name="timeStamp" value="9" />
+          <line>151</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/main.py</url>
+          <line>120</line>
+          <option name="timeStamp" value="15" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="10" />
+      <option name="time" value="16" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/dataSource/Train/Train/train101-m.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3432267">
+          <caret line="127121" column="4" selection-start-line="127121" selection-start-column="0" selection-end-line="127121" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dataSource/Test/res/res_102.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/randomRorest.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="351">
+          <caret line="13" column="25" selection-start-line="13" selection-start-column="25" selection-end-line="13" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/_pydev_imps/_pydev_execfile.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="459">
+          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/detectors/DetectorsConfig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="81">
+          <caret line="3" column="11" selection-start-line="3" selection-start-column="11" selection-end-line="3" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dataSource/Test/res/res_101.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://E:/anaconda/envs/python_35/Lib/codecs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="8316">
+          <caret line="308" column="0" selection-start-line="308" selection-start-column="0" selection-end-line="308" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -901,13 +934,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dataSource/detectors">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/dataSource/Test/res/res_101.csv">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -951,7 +977,7 @@
     </entry>
     <entry file="file://E:/anaconda/envs/python_35/Lib/site-packages/numpy/lib/function_base.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="301">
+        <state relative-caret-position="38340">
           <caret line="1452" column="4" selection-start-line="1452" selection-start-column="4" selection-end-line="1452" selection-end-column="4" />
           <folding />
         </state>
@@ -965,34 +991,58 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://E:/anaconda/envs/python_35/Lib/codecs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="8316">
+          <caret line="308" column="0" selection-start-line="308" selection-start-column="0" selection-end-line="308" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/dataSource/Train/Train/train101-m.csv">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="630">
+        <state relative-caret-position="3432267">
           <caret line="127121" column="4" selection-start-line="127121" selection-start-column="0" selection-end-line="127121" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Diff(1).py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="54">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/detectors.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="567">
+          <caret line="21" column="37" selection-start-line="21" selection-start-column="37" selection-end-line="21" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dataSource/detectors">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/detectors/DetectorsConfig">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="81">
-          <caret line="3" column="11" selection-start-line="3" selection-start-column="11" selection-end-line="3" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://E:/anaconda/envs/python_35/Lib/codecs.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="308" column="0" selection-start-line="308" selection-start-column="0" selection-end-line="308" selection-end-column="0" />
+        <state relative-caret-position="54">
+          <caret line="2" column="6" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="333">
-          <caret line="112" column="26" selection-start-line="111" selection-start-column="29" selection-end-line="112" selection-end-column="26" />
+        <state relative-caret-position="456">
+          <caret line="328" column="0" selection-start-line="328" selection-start-column="0" selection-end-line="328" selection-end-column="0" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
           </folding>
