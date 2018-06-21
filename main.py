@@ -47,7 +47,7 @@ def featuregenerate(df_new,df_positive,df_wholenegative):
                  conf.get("detectors", "ARIMA")]
 
 
-    feature_head =["Timestamp"]#特征表头
+    feature_head =["Timestamp","Label"]#特征表头
     if detectorsoption[2]=="1":
         feature_head.append("Simple_MA_10")
         feature_head.append("Simple_MA_20")
@@ -55,53 +55,66 @@ def featuregenerate(df_new,df_positive,df_wholenegative):
         feature_head.append("Simple_MA_40")
         feature_head.append("Simple_MA_50")
     feature = pd.DataFrame(columns=feature_head) #生成特征表
-
+    print(feature)
     for index,row in df_positive.iterrows():#生成正例特征
         try:
 
             feature_insert = []
             index=int(index)
             feature_insert.append(index)
-            if detectorsoption[2]=="1":
-                f1 = [simple_ma(df_new,index,10)]
-                f2 = [simple_ma(df_new,index, 20)]
-                f3 = [simple_ma(df_new,index, 30)]
-                f4 = [simple_ma(df_new,index, 40)]
-                f5 = [simple_ma(df_new,index, 50)]
+            feature_insert.append(df_new.loc[index,"Label"])
+            #print(feature_insert)
+            if detectorsoption[2]=="1": #simple_MA
+                f1 = simple_ma(df_new,index,10)
+                f2 = simple_ma(df_new,index, 20)
+                f3 = simple_ma(df_new,index, 30)
+                f4 = simple_ma(df_new,index, 40)
+                f5 = simple_ma(df_new,index, 50)
                 feature_insert.append(f1)
                 feature_insert.append(f2)
                 feature_insert.append(f3)
                 feature_insert.append(f4)
                 feature_insert.append(f5)
         except Exception as e:
-            print('Exception: ', e)
+            pass
+            #print('Exception: ', e)
         else:
             insertRow = pd.DataFrame([feature_insert], columns=feature_head)
-            feature.append(insertRow,ignore_index=True)
-
+            #print(insertRow)
+            feature=feature.append(insertRow,ignore_index=True)
+            #print(feature)
     trainingdata_num = copy.deepcopy(feature.iloc[:, 0].size)*2 #训练样本条数
-    while feature.iloc[:,0].size<trainingdata_num:
+    while feature.iloc[:,0].size<trainingdata_num:#生成负例特征
         try:
-            index= df_wholenegative.irow[random.randint(0,df_wholenegative.iloc[:,0].size-1)].index
+            index= df_wholenegative.sample(1).index[0]#int64index[0]=int
+            #print(index)
             feature_insert = []
             feature_insert.append(index)
+            feature_insert.append(df_new.loc[index, "Label"])
+            #print(feature_insert)
             if detectorsoption[2]=="1":
-                f1 = [simple_ma(df_new,index,10)]
-                f2 = [simple_ma(df_new, index, 20)]
-                f3 = [simple_ma(df_new, index, 30)]
-                f4 = [simple_ma(df_new, index, 40)]
-                f5 = [simple_ma(df_new, index, 50)]
+                f1 = simple_ma(df_new,index,10)
+                f2 = simple_ma(df_new, index, 20)
+                f3 = simple_ma(df_new, index, 30)
+                f4 = simple_ma(df_new, index, 40)
+                f5 = simple_ma(df_new, index, 50)
                 feature_insert.append(f1)
                 feature_insert.append(f2)
                 feature_insert.append(f3)
                 feature_insert.append(f4)
                 feature_insert.append(f5)
-        except:
+        except Exception as e:
+            #print('Exception: ', e)
             pass
         else:
             insertRow = pd.DataFrame([feature_insert], columns=feature_head)
-            feature.append(insertRow,ignore_index=True)
-    return [detectorsoption,feature]
+            #print(insertRow)
+            feature=feature.append(insertRow,ignore_index=True)
+            #print(feature)
+
+    feature = feature.set_index("Timestamp")
+    print(feature)
+    return [detectorsoption,feature,feature_head]
 
 
 def RFtraining(df):
@@ -115,18 +128,20 @@ def RFtraining(df):
     clf.fit(train[features], train[target])
     return clf
 
-def RFCrossValidation(df):
+def RFCrossValidation(df,feature_head):
     #带交叉验证的随机森林
-    feature_cols = ['Value']
+    #feature_cols = ['Value']
+    #feature_cols=copy.deepcopy(feature_head).remove('Timestamp')
+    feature_cols = ["Simple_MA_10","Simple_MA_20","Simple_MA_30","Simple_MA_40","Simple_MA_50"]
     features = df[feature_cols]
-    target = df.Label
+    target = df['Label'].astype('int')
     #X_train, X_test, y_train, y_test = train_test_split(features, target, test_size=0.4, random_state=0)
 
     #print(X_train.shape)
 
     clf = RandomForestClassifier(n_jobs=2)
     scores = cross_val_score(clf, features, target, cv=5)
-    return scores
+    return scores.mean()
 
 
 
@@ -134,10 +149,15 @@ def RFCrossValidation(df):
 def simple_ma(df, timestamp, win=10):
     st = timestamp - int(win / 2) * 60
     ed = timestamp + (win - int(win / 2) - 1) * 60
-    part_df = df.loc[st:ed, "Value"]
-    if len(part_df) != win:
-        raise Exception
-    return part_df.sum() / win
+    try:
+        part_df = df.loc[st:ed, "Value"]
+        if len(part_df) != win:
+            raise Exception
+        return part_df.sum() / win
+    except Exception as e :
+        raise e
+
+
 
 
 def alg2(timestamp,df):
@@ -193,7 +213,10 @@ def alg14(timestamp,df):
 
 
 if __name__ == '__main__':
-    print(simple_ma(dataload()[0],1497427740,10))
+    [a,b,c,d] = dataload()
+    [e,f,g] = featuregenerate(a,b,c)
+    print(RFCrossValidation(f,g))
+    #print(simple_ma(dataload()[0],1497427740,10))
     #print(featuregenerate(dataload()[0],dataload()[1],dataload()[2]))
     #print(dataload()[1].index)
     #print(RFCrossValidation(dataload()[3]))
