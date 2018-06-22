@@ -2,6 +2,8 @@ import configparser
 import pandas as pd
 import numpy as np
 import copy
+import statistics as sta
+import math
 import random
 import traceback
 from sklearn.model_selection  import train_test_split, cross_val_score
@@ -71,8 +73,15 @@ def featuregenerate(df_new,df_positive,df_wholenegative):
         feature_head = feature_head + ["Diff_1_slot", "Diff_1_day", "Diff_1_week"]
     if detectorsoption[2]=="1":
         feature_head = feature_head+["Simple_MA_10","Simple_MA_20","Simple_MA_30","Simple_MA_40","Simple_MA_50"]
+    if detectorsoption[3]=="1":
+        feature_head = feature_head+["Weighted_MA_10","Weighted_MA_20","Weighted_MA_30","Weighted_MA_40","Weighted_MA_50"]
+    if detectorsoption[4]=="1":
+        feature_head = feature_head+["MA_of_diff_10","MA_of_diff_20","MA_of_diff_30","MA_of_diff_40","MA_of_diff_50"]
     if detectorsoption[5] == "1":
         feature_head = feature_head + ["EWMA_0.1", "EWMA_0.3", "EWMA_0.5", "EWMA_0.7","EWMA_0.9"]
+    if detectorsoption[8]=="1":
+        feature_head = feature_head +["Historical_average_1", "Historical_average_2", "Historical_average_3","Historical_average_4","Historical_average_5"]
+
         #feature_head.append("Simple_MA_10")
         #feature_head.append("Simple_MA_20")
         #feature_head.append("Simple_MA_30")
@@ -82,7 +91,6 @@ def featuregenerate(df_new,df_positive,df_wholenegative):
     print(feature)
     for index,row in df_positive.iterrows():#生成正例特征
         try:
-
             feature_insert = []
             index=int(index)
             feature_insert.append(index)
@@ -100,7 +108,20 @@ def featuregenerate(df_new,df_positive,df_wholenegative):
                 f4 = simple_ma(df_new,index, 40)
                 f5 = simple_ma(df_new,index, 50)
                 feature_insert= feature_insert+[f1,f2,f3,f4,f5]
-
+            if detectorsoption[3]=="1": #Weighted_MA
+                f31 = weighted_ma(df_new,index,10)
+                f32 = weighted_ma(df_new,index, 20)
+                f33 = weighted_ma(df_new,index, 30)
+                f34 = weighted_ma(df_new,index, 40)
+                f35 = weighted_ma(df_new,index, 50)
+                feature_insert= feature_insert+[f31,f32,f33,f34,f35]
+            if detectorsoption[4]=="1": #MA of diff
+                f41 = ma_diff(df_new,index,10)
+                f42 = ma_diff(df_new,index, 20)
+                f43 = ma_diff(df_new,index, 30)
+                f44 = ma_diff(df_new,index, 40)
+                f45 = ma_diff(df_new,index, 50)
+                feature_insert= feature_insert+[f41,f42,f43,f44,f45]
             if detectorsoption[5] == "1":  # EWMA
                 f51 = calculateEWMA(df_new, index, 0.1)
                 f52 = calculateEWMA(df_new, index, 0.3)
@@ -108,7 +129,13 @@ def featuregenerate(df_new,df_positive,df_wholenegative):
                 f54 = calculateEWMA(df_new, index, 0.7)
                 f55 = calculateEWMA(df_new, index, 0.9)
                 feature_insert = feature_insert + [f51, f52, f53, f54, f55]
-
+            if detectorsoption[8] == "1":  # Historical averag
+                f81 = historical_average(df_new, index, 1)
+                f82 = historical_average(df_new, index, 2)
+                f83 = historical_average(df_new, index, 3)
+                f84 = historical_average(df_new, index, 4)
+                f85 = historical_average(df_new, index, 5)
+                feature_insert = feature_insert + [f81, f82, f83, f84, f85]
                 #feature_insert.append(f1)
                 #feature_insert.append(f2)
                 #feature_insert.append(f3)
@@ -143,6 +170,20 @@ def featuregenerate(df_new,df_positive,df_wholenegative):
                 f4 = simple_ma(df_new, index, 40)
                 f5 = simple_ma(df_new, index, 50)
                 feature_insert = feature_insert + [f1, f2, f3, f4, f5]
+            if detectorsoption[3]=="1": #Weighted_MA
+                f31 = weighted_ma(df_new,index,10)
+                f32 = weighted_ma(df_new,index, 20)
+                f33 = weighted_ma(df_new,index, 30)
+                f34 = weighted_ma(df_new,index, 40)
+                f35 = weighted_ma(df_new,index, 50)
+                feature_insert= feature_insert+[f31,f32,f33,f34,f35]
+            if detectorsoption[4]=="1": #MA of diff
+                f41 = ma_diff(df_new,index,10)
+                f42 = ma_diff(df_new,index, 20)
+                f43 = ma_diff(df_new,index, 30)
+                f44 = ma_diff(df_new,index, 40)
+                f45 = ma_diff(df_new,index, 50)
+                feature_insert= feature_insert+[f41,f42,f43,f44,f45]
             if detectorsoption[5] == "1":  # EWMA
                 f51 = calculateEWMA(df_new, index, 0.1)
                 f52 = calculateEWMA(df_new, index, 0.3)
@@ -150,6 +191,14 @@ def featuregenerate(df_new,df_positive,df_wholenegative):
                 f54 = calculateEWMA(df_new, index, 0.7)
                 f55 = calculateEWMA(df_new, index, 0.9)
                 feature_insert = feature_insert + [f51, f52, f53, f54, f55]
+            if detectorsoption[8] == "1":  # Historical averag
+                f81 = historical_average(df_new, index, 1)
+                f82 = historical_average(df_new, index, 2)
+                f83 = historical_average(df_new, index, 3)
+                f84 = historical_average(df_new, index, 4)
+                f85 = historical_average(df_new, index, 5)
+                feature_insert = feature_insert + [f81, f82, f83, f84, f85]
+                print(feature_insert)
                 #feature_insert.append(f1)
                 #feature_insert.append(f2)
                 #feature_insert.append(f3)
@@ -190,8 +239,16 @@ def RFCrossValidation(detectorsoption,df,feature_head):
             feature_cols = feature_cols +["Diff_1_slot", "Diff_1_day", "Diff_1_week"]
         if detectorsoption[2]=="1":
             feature_cols = feature_cols +["Simple_MA_10","Simple_MA_20","Simple_MA_30","Simple_MA_40","Simple_MA_50"]
+        if detectorsoption[3] == "1":
+            feature_cols = feature_cols + ["Weighted_MA_10", "Weighted_MA_20", "Weighted_MA_30", "Weighted_MA_40",
+                                           "Weighted_MA_50"]
+        if detectorsoption[4] == "1":
+            feature_cols = feature_cols + ["MA_of_diff_10", "MA_of_diff_20", "MA_of_diff_30", "MA_of_diff_40",
+                                           "MA_of_diff_50"]
         if detectorsoption[5]=="1":
             feature_cols = feature_cols +["EWMA_0.1", "EWMA_0.3", "EWMA_0.5", "EWMA_0.7","EWMA_0.9"]
+        if detectorsoption[8]=="1":
+            feature_cols = feature_cols +["Historical_average_1", "Historical_average_2", "Historical_average_3","Historical_average_4","Historical_average_5"]
         features = df[feature_cols]
         target = df['Label'].astype('int')
         #X_train, X_test, y_train, y_test = train_test_split(features, target, test_size=0.4, random_state=0)
@@ -199,7 +256,8 @@ def RFCrossValidation(detectorsoption,df,feature_head):
         #print(X_train.shape)
 
         clf = RandomForestClassifier(n_jobs=2)
-        scores = cross_val_score(clf, features, target, cv=5)
+        #scores = cross_val_score(clf, features, target, cv=5)
+        scores = cross_val_score(clf, features, target,scoring='f1', cv=5)
         return scores.mean()
     except Exception as e:
         print(e)
@@ -261,12 +319,47 @@ def simple_ma(df, timestamp, win=10):
 
 
 
-def alg4(timestamp,df):
-    pass
+def weighted_ma(df, timestamp, win=10):
+    w = []
+    cnt = 1
+    for i in range(0, win):
+        if i <= int(win / 4):
+            w.append(cnt)
+            cnt += 1
+        elif i >= int(win * 3 / 4):
+            cnt = cnt - 1
+            w.append(cnt)
+        else:
+            w.append(cnt)
+    st = timestamp - int(win / 2) * 60
+    ed = timestamp + (win - int(win / 2) - 1) * 60
+    t = st
+    val = 0
+    i = 0
+    try:
+        while t <= ed:
+            val += w[i] * df.loc[t, "Value"]
+            i += 1
+            t += 60
+    except Exception:
+        raise Exception
+    return val / sum(w)
 
 
-def alg5(timestamp,df):
-    pass
+def ma_diff(df, timestamp, win=10):
+    st = timestamp - int(win / 2) * 60
+    ed = timestamp + (win - int(win / 2) - 1) * 60
+    t = st
+    diff = []
+    try:
+        while t <= ed:
+            diff.append(df.loc[t, "Value"] - df.loc[t - 60 * 10, "Value"])
+            t += 60
+        return sta.mean(diff)
+    except Exception as e:
+        #print(e)
+        #print(1)
+        raise Exception
 
 
 def calculateEWMA(df, timestamp, alpha):
@@ -282,8 +375,33 @@ def alg8(timestamp,df):
     pass
 
 
-def alg9(timestamp,df):
-    pass
+#根据已知miu和std的正态分布求x对应的概率密度
+def norm(miu, std, x):
+    u = (x - miu) / std
+    x = abs(u) / math.sqrt(2)
+    T = (0.0705230784, 0.0422820123, 0.0092705272,
+         0.0001520143, 0.0002765672, 0.0000430638)
+    E = 1 - pow((1 + sum([a * pow(x, (i + 1))
+                          for i, a in enumerate(T)])), -16)
+    p = 0.5 - 0.5 * E if u < 0 else 0.5 + 0.5 * E
+    return p
+
+
+def historical_average(df, timestamp, win=1):
+    number_of_points = win * 24 * 60
+    st = timestamp - number_of_points * 60 + 60
+    ed = timestamp
+    try:
+        val_list = df.loc[st:ed, "Value"].tolist()
+        miu = sta.mean(val_list)
+        if len(val_list) == 1:
+            std = 0
+        else:
+            std = sta.stdev(val_list)
+        val = df.loc[timestamp, "Value"]
+        return 1 - norm(miu, std, val)
+    except Exception:
+        raise Exception
 
 
 def alg10(timestamp,df):
@@ -311,25 +429,25 @@ def test(input_file):
     return RFCrossValidation(e, f, g)
 
 if __name__ == '__main__':
-    print([test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train101-m.csv"),
-           test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train102.csv"),
-           test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train103.csv"),
-           test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train104.csv"),
-           test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train105.csv"),
-           test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train106.csv"),
-           test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train107.csv"),
-           test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train108.csv"),
-           test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train109.csv"),
-           test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train110.csv"),
-           test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train111.csv"),
-           test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train112.csv"),
-           test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train113.csv"),
-           test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train114.csv"),
-           test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train115.csv"),])
+    #print([test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train101-m.csv"),
+    #       test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train102.csv"),
+    #       test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train103.csv"),
+    #       test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train104.csv"),
+    #       test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train105.csv"),
+    #       test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train106.csv"),
+    #       test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train107.csv"),
+    #       test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train108.csv"),
+    #       test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train109.csv"),
+    #       test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train110.csv"),
+    #       test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train111.csv"),
+    #       test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train112.csv"),
+    #       test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train113.csv"),
+    #       test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train114.csv"),
+    #       test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train115.csv"),])
 
-    #[a,b,c,d] = dataload()
-    #[e,f,g] = featuregenerate(a,b,c)
-    #print(RFCrossValidation(e,f,g))
+    [a,b,c,d] = dataload("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train101-m.csv")
+    [e,f,g] = featuregenerate(a,b,c)
+    print(RFCrossValidation(e,f,g))
 
 
     #print(simple_ma(dataload()[0],1497427740,10))
