@@ -8,6 +8,7 @@ import random
 import traceback
 
 from sklearn.model_selection import KFold
+from sklearn.model_selection import cross_val_predict
 from statsmodels.tsa.stattools import adfuller
 from statsmodels.tsa.arima_model import ARIMA
 from statsmodels.tsa.seasonal import seasonal_decompose
@@ -285,7 +286,7 @@ def RFtraining(df):
     clf.fit(train[features], train[target])
     return clf
 
-def RFCrossValidation(detectorsoption,df,feature_head):
+def RFCrossValidation(detectorsoption,df,inputfile):
     #带交叉验证的随机森林
     #feature_cols = ['Value']
     #feature_cols=copy.deepcopy(feature_head).remove('Timestamp')
@@ -326,9 +327,16 @@ def RFCrossValidation(detectorsoption,df,feature_head):
         scores_re = cross_val_score(clf, features, target, scoring='recall', cv=kf)
         scores_pr = cross_val_score(clf, features, target, scoring='precision', cv=kf)
         scores_f1 = cross_val_score(clf, features, target, scoring='f1', cv=kf)
+        scores_predict = cross_val_predict(clf, features, target,  cv=kf)
         result = [scores_ac.mean(),scores_re.mean(),scores_pr.mean(),scores_f1.mean()]
         print(result)
-        file = open('data.txt', 'w')
+
+        df.to_csv(inputfile.split(".")[0]+"feature_result.csv", sep=',', header=True, index=True)
+        #file1 = open(inputfile.split(".")[0] + 'score_predict_result.txt', 'w')
+        #file1.write(str(scores_predict))
+        #file1.close()
+        np.savetxt(inputfile.split(".")[0] + 'score_predict_result.txt', scores_predict, delimiter=',')
+        file = open(inputfile.split(".")[0]+'mearsure_result.txt', 'w')
         file.write(str(result))
         file.close()
         return result
@@ -677,7 +685,7 @@ def gaussiaonSameHourMad(df, residual, ts_start, win):
 def test(input_file):
     [a, b, c, d] = dataload(input_file)
     [e, f, g] = featuregenerate(a, b, c)
-    return RFCrossValidation(e, f, g)
+    return RFCrossValidation(e, f, input_file)
 
 if __name__ == '__main__':
     #print([test("dataSource\\Train\\Train\\train101-m.csv"),
@@ -698,7 +706,7 @@ if __name__ == '__main__':
 
     [a,b,c,d] = dataload("dataSource\\Train\\Train\\train105.csv")
     [e,f,g] = featuregenerate(a,b,c)
-    print(RFCrossValidation(e,f,g))
+    print(RFCrossValidation(e,f,"dataSource\\Train\\Train\\train105.csv"))
 
 
     #print(simple_ma(dataload()[0],1497427740,10))
