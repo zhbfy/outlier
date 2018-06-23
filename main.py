@@ -93,7 +93,7 @@ def featuregenerate(df_new,df_positive,df_wholenegative):
         feature_head = feature_head +["Historical_average_1", "Historical_average_2", "Historical_average_3","Historical_average_4","Historical_average_5"]
     if detectorsoption[11] == "1":
         for i in range(1,6):
-            for j in range(1,4):
+            for j in range(1,2):
                 feature_head = feature_head + ["SVD_"+str(i*10)+"rows_"+str(2*j+1)+"weeks"]
         #feature_head.append("Simple_MA_10")
         #feature_head.append("Simple_MA_20")
@@ -165,8 +165,9 @@ def featuregenerate(df_new,df_positive,df_wholenegative):
                 feature_insert = feature_insert + [f81, f82, f83, f84, f85]
             if detectorsoption[11] == "1":  # svd
                 for i in range(1, 6):
-                    for j in range(1, 4):
+                    for j in range(1, 2):
                         feature_insert = feature_insert + [svd(df_new, index, i*10, 2*j+1)]
+            #a = feature_insert.index("None")
                 #feature_insert.append(f1)
                 #feature_insert.append(f2)
                 #feature_insert.append(f3)
@@ -245,8 +246,9 @@ def featuregenerate(df_new,df_positive,df_wholenegative):
                 feature_insert = feature_insert + [f81, f82, f83, f84, f85]
             if detectorsoption[11] == "1":  # svd
                 for i in range(1, 6):
-                    for j in range(1, 4):
+                    for j in range(1, 2):
                         feature_insert = feature_insert + [svd(df_new, index, i * 10, 2 * j + 1)]
+
                 #print(feature_insert)
                 #feature_insert.append(f1)
                 #feature_insert.append(f2)
@@ -257,13 +259,16 @@ def featuregenerate(df_new,df_positive,df_wholenegative):
             #print('Exception: ', e)
             pass
         else:
+
             insertRow = pd.DataFrame([feature_insert], columns=feature_head)
             #print(insertRow)
             feature=feature.append(insertRow,ignore_index=True)
             #print(feature)
 
     feature = feature.set_index("Timestamp")
+    feature.dropna(axis=0, how='any', thresh=None, subset=None, inplace=True)
     print(feature)
+
     return [detectorsoption,feature,feature_head]
 
 
@@ -303,8 +308,8 @@ def RFCrossValidation(detectorsoption,df,feature_head):
         if detectorsoption[8]=="1":
             feature_cols = feature_cols +["Historical_average_1", "Historical_average_2", "Historical_average_3","Historical_average_4","Historical_average_5"]
         if detectorsoption[11] == "1":
-            for i in range(1, 5):
-                for j in range(1, 3):
+            for i in range(1, 6):
+                for j in range(1, 2):
                     feature_cols = feature_cols + ["SVD_"+str(i*10)+"rows_"+str(2*j+1)+"weeks"]
         features = df[feature_cols]
         target = df['Label'].astype('int')
@@ -333,7 +338,9 @@ def RFValueCrossValidation(df):
 
     clf = RandomForestClassifier(n_jobs=2)
     scores = cross_val_score(clf, features, target, cv=5)
-    return scores.mean()
+    result=scores.mean()
+    print(result)
+    return result
 
 
 
@@ -660,25 +667,25 @@ def test(input_file):
     return RFCrossValidation(e, f, g)
 
 if __name__ == '__main__':
-    print([test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train101-m.csv"),
-           test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train102.csv"),
-           test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train103.csv"),
-           test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train104.csv"),
-           test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train105.csv"),
-           test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train106.csv"),
-           test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train107.csv"),
-           test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train108.csv"),
-           test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train109.csv"),
-           test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train110.csv"),
-           test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train111.csv"),
-           test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train112.csv"),
-           test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train113.csv"),
-           test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train114.csv"),
-           test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train115.csv"),])
+    #print([test("dataSource\\Train\\Train\\train101-m.csv"),
+    #       test("dataSource\\Train\\Train\\train102.csv"),
+    #       test("dataSource\\Train\\Train\\train103.csv"),
+    #       test("dataSource\\Train\\Train\\train104.csv"),
+    #       test("dataSource\\Train\\Train\\train105.csv"),
+    #       test("dataSource\\Train\\Train\\train106.csv"),
+    #       test("dataSource\\Train\\Train\\train107.csv"),
+    #       test("dataSource\\Train\\Train\\train108.csv"),
+    #       test("dataSource\\Train\\Train\\train109.csv"),
+    #       test("dataSource\\Train\\Train\\train110.csv"),
+    #       test("dataSource\\Train\\Train\\train111.csv"),
+    #       test("dataSource\\Train\\Train\\train112.csv"),
+    #       test("dataSource\\Train\\Train\\train113.csv"),
+    #       test("dataSource\\Train\\Train\\train114.csv"),
+    #       test("dataSource\\Train\\Train\\train115.csv"),])
 
-    #[a,b,c,d] = dataload("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train104.csv")
-    #[e,f,g] = featuregenerate(a,b,c)
-    #print(RFCrossValidation(e,f,g))
+    [a,b,c,d] = dataload("dataSource\\Train\\Train\\train102.csv")
+    [e,f,g] = featuregenerate(a,b,c)
+    print(RFCrossValidation(e,f,g))
 
 
     #print(simple_ma(dataload()[0],1497427740,10))
