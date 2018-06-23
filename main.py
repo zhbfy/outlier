@@ -6,6 +6,12 @@ import statistics as sta
 import math
 import random
 import traceback
+from statsmodels.tsa.stattools import adfuller
+from statsmodels.tsa.arima_model import ARIMA
+from statsmodels.tsa.seasonal import seasonal_decompose
+import time
+import matplotlib.pylab as plt
+import datetime
 from sklearn.model_selection  import train_test_split, cross_val_score
 
 from sklearn.ensemble import RandomForestClassifier
@@ -79,9 +85,16 @@ def featuregenerate(df_new,df_positive,df_wholenegative):
         feature_head = feature_head+["MA_of_diff_10","MA_of_diff_20","MA_of_diff_30","MA_of_diff_40","MA_of_diff_50"]
     if detectorsoption[5] == "1":
         feature_head = feature_head + ["EWMA_0.1", "EWMA_0.3", "EWMA_0.5", "EWMA_0.7","EWMA_0.9"]
+    if detectorsoption[6] == "1":
+        feature_head = feature_head + ["TSD_1", "TSD_2", "TSD_3", "TSD_4","TSD_5"]
+    if detectorsoption[7] == "1":
+        feature_head = feature_head + ["TSD_MAD_1", "TSD_MAD_2", "TSD_MAD_3", "TSD_MAD_4","TSD_MAD_5"]
     if detectorsoption[8]=="1":
         feature_head = feature_head +["Historical_average_1", "Historical_average_2", "Historical_average_3","Historical_average_4","Historical_average_5"]
-
+    if detectorsoption[11] == "1":
+        for i in range(1,6):
+            for j in range(1,4):
+                feature_head = feature_head + ["SVD_"+str(i*10)+"rows_"+str(2*j+1)+"weeks"]
         #feature_head.append("Simple_MA_10")
         #feature_head.append("Simple_MA_20")
         #feature_head.append("Simple_MA_30")
@@ -129,6 +142,20 @@ def featuregenerate(df_new,df_positive,df_wholenegative):
                 f54 = calculateEWMA(df_new, index, 0.7)
                 f55 = calculateEWMA(df_new, index, 0.9)
                 feature_insert = feature_insert + [f51, f52, f53, f54, f55]
+            if detectorsoption[6] == "1":  # TSD
+                f61 = calculateTSD(df_new,index , 7*24)
+                f62 = calculateTSD(df_new,index , 2*7*24)
+                f63 = calculateTSD(df_new,index , 3*7*24)
+                f64 = calculateTSD(df_new,index , 4*7*24)
+                f65 = calculateTSD(df_new,index , 5*7*24)
+                feature_insert = feature_insert + [f61, f62, f63, f64, f65]
+            if detectorsoption[7] == "1":  # TSD MAD
+                f61 = calculateTSDmad(df_new,index , 7*24)
+                f62 = calculateTSDmad(df_new,index , 2*7*24)
+                f63 = calculateTSDmad(df_new,index , 3*7*24)
+                f64 = calculateTSDmad(df_new,index , 4*7*24)
+                f65 = calculateTSDmad(df_new,index , 5*7*24)
+                feature_insert = feature_insert + [f61, f62, f63, f64, f65]
             if detectorsoption[8] == "1":  # Historical averag
                 f81 = historical_average(df_new, index, 1)
                 f82 = historical_average(df_new, index, 2)
@@ -136,6 +163,10 @@ def featuregenerate(df_new,df_positive,df_wholenegative):
                 f84 = historical_average(df_new, index, 4)
                 f85 = historical_average(df_new, index, 5)
                 feature_insert = feature_insert + [f81, f82, f83, f84, f85]
+            if detectorsoption[11] == "1":  # svd
+                for i in range(1, 6):
+                    for j in range(1, 4):
+                        feature_insert = feature_insert + [svd(df_new, index, i*10, 2*j+1)]
                 #feature_insert.append(f1)
                 #feature_insert.append(f2)
                 #feature_insert.append(f3)
@@ -191,6 +222,20 @@ def featuregenerate(df_new,df_positive,df_wholenegative):
                 f54 = calculateEWMA(df_new, index, 0.7)
                 f55 = calculateEWMA(df_new, index, 0.9)
                 feature_insert = feature_insert + [f51, f52, f53, f54, f55]
+            if detectorsoption[6] == "1":  # TSD
+                f61 = calculateTSD(df_new,index , 7*24)
+                f62 = calculateTSD(df_new,index , 2*7*24)
+                f63 = calculateTSD(df_new,index , 3*7*24)
+                f64 = calculateTSD(df_new,index , 4*7*24)
+                f65 = calculateTSD(df_new,index , 5*7*24)
+                feature_insert = feature_insert + [f61, f62, f63, f64, f65]
+            if detectorsoption[7] == "1":  # TSD MAD
+                f61 = calculateTSDmad(df_new,index , 7*24)
+                f62 = calculateTSDmad(df_new,index , 2*7*24)
+                f63 = calculateTSDmad(df_new,index , 3*7*24)
+                f64 = calculateTSDmad(df_new,index , 4*7*24)
+                f65 = calculateTSDmad(df_new,index , 5*7*24)
+                feature_insert = feature_insert + [f61, f62, f63, f64, f65]
             if detectorsoption[8] == "1":  # Historical averag
                 f81 = historical_average(df_new, index, 1)
                 f82 = historical_average(df_new, index, 2)
@@ -198,7 +243,11 @@ def featuregenerate(df_new,df_positive,df_wholenegative):
                 f84 = historical_average(df_new, index, 4)
                 f85 = historical_average(df_new, index, 5)
                 feature_insert = feature_insert + [f81, f82, f83, f84, f85]
-                print(feature_insert)
+            if detectorsoption[11] == "1":  # svd
+                for i in range(1, 6):
+                    for j in range(1, 4):
+                        feature_insert = feature_insert + [svd(df_new, index, i * 10, 2 * j + 1)]
+                #print(feature_insert)
                 #feature_insert.append(f1)
                 #feature_insert.append(f2)
                 #feature_insert.append(f3)
@@ -247,8 +296,16 @@ def RFCrossValidation(detectorsoption,df,feature_head):
                                            "MA_of_diff_50"]
         if detectorsoption[5]=="1":
             feature_cols = feature_cols +["EWMA_0.1", "EWMA_0.3", "EWMA_0.5", "EWMA_0.7","EWMA_0.9"]
+        if detectorsoption[6] == "1":
+            feature_cols = feature_cols + ["TSD_1", "TSD_2", "TSD_3", "TSD_4", "TSD_5"]
+        if detectorsoption[7] == "1":
+            feature_cols = feature_cols + ["TSD_MAD_1", "TSD_MAD_2", "TSD_MAD_3", "TSD_MAD_4", "TSD_MAD_5"]
         if detectorsoption[8]=="1":
             feature_cols = feature_cols +["Historical_average_1", "Historical_average_2", "Historical_average_3","Historical_average_4","Historical_average_5"]
+        if detectorsoption[11] == "1":
+            for i in range(1, 5):
+                for j in range(1, 3):
+                    feature_cols = feature_cols + ["SVD_"+str(i*10)+"rows_"+str(2*j+1)+"weeks"]
         features = df[feature_cols]
         target = df['Label'].astype('int')
         #X_train, X_test, y_train, y_test = train_test_split(features, target, test_size=0.4, random_state=0)
@@ -286,8 +343,7 @@ def alg1(timestamp,df):
 
 
 
-def calculateDiff(df, timestamp, parameter):
-    # if parameter == 'last-slot':
+def calculateDiff(df, timestamp, parameter):#测试通过
     #     interval = 1 * 60
     # elif parameter == 'last-day':
     #     interval = 24 * 60 * 60
@@ -304,7 +360,7 @@ def calculateDiff(df, timestamp, parameter):
         return diff_value
 
 
-def simple_ma(df, timestamp, win=10):
+def simple_ma(df, timestamp, win=10):#测试通过
     st = timestamp - int(win / 2) * 60
     ed = timestamp + (win - int(win / 2) - 1) * 60
     try:
@@ -319,7 +375,7 @@ def simple_ma(df, timestamp, win=10):
 
 
 
-def weighted_ma(df, timestamp, win=10):
+def weighted_ma(df, timestamp, win=10):#测试通过
     w = []
     cnt = 1
     for i in range(0, win):
@@ -346,7 +402,7 @@ def weighted_ma(df, timestamp, win=10):
     return val / sum(w)
 
 
-def ma_diff(df, timestamp, win=10):
+def ma_diff(df, timestamp, win=10):#测试通过
     st = timestamp - int(win / 2) * 60
     ed = timestamp + (win - int(win / 2) - 1) * 60
     t = st
@@ -362,17 +418,86 @@ def ma_diff(df, timestamp, win=10):
         raise Exception
 
 
-def calculateEWMA(df, timestamp, alpha):
+def calculateEWMA(df, timestamp, alpha):#测试通过
     new_df = df.loc[:timestamp, ['Value']]
     return new_df.ewm(alpha=alpha, adjust=False).mean().loc[timestamp, 'Value']
 
 
-def alg7(timestamp,df):
-    pass
+def calculateTSD(df, timestamp, win):#测试通过
+    #  win 是参数，即时间窗口是多少分钟，例如1天就是24 * 60、一周7*24*60
+    decompfreq = win
+    ts = df[['Value']]
+    ts.index = pd.to_datetime(ts.index, unit='s')
+
+    decomposition = seasonal_decompose(ts, freq=decompfreq, model='additive', two_sided=True)
+    residual = decomposition.resid
+    # plt.plot(residual)
+    # plt.savefig('residual.png')
+    # residual.dropna(inplace=True)
+    # print(residual)
+    # print(residual[residual["Value"]!=np.NaN])
+
+    query_ts = pd.to_datetime(timestamp, unit='s')
+    if np.isnan(residual.loc[query_ts, 'Value']):
+        raise Exception('invalid timestamp:', timestamp)
+
+    # print('query_ts')
+    # print(query_ts)
+    q_y = query_ts.year
+    q_m = query_ts.month
+    q_d = query_ts.day
+    q_h = query_ts.hour
+    # hour_start = int(time.mktime((q_y, q_m, q_d, q_h, 0, 0, 0, 0, 0)))
+    # hour_end = pd.to_datetime(datetime(q_y, q_m, q_d, q_h + 1))
+    tz_utc = datetime.timezone(datetime.timedelta(hours=0))
+    ts_start = int(datetime.datetime(q_y, q_m, q_d, q_h, 0, 0, tzinfo=tz_utc).timestamp())
+    # print('ts_start')
+    # print(datetime.datetime(q_y, q_m, q_d, q_h, 0, 0, tzinfo=tz_utc))
+    mean, std = gaussiaonSameHour(df, residual, ts_start, win)
+    # print(mean)
+    # print(std)
+
+    return float(np.abs((residual.loc[query_ts, 'Value'] - mean))/std)
 
 
-def alg8(timestamp,df):
-    pass
+
+
+
+def calculateTSDmad(df, timestamp, win):#测试通过
+    #  win 是参数，即时间窗口是多少分钟，例如1天就是24 * 60、一周7*24*60
+    decompfreq = win
+    ts = df[['Value']]
+    ts.index = pd.to_datetime(ts.index, unit='s')
+
+    decomposition = seasonal_decompose(ts, freq=decompfreq, model='additive', two_sided=True)
+    residual = decomposition.resid
+    # plt.plot(residual)
+    # plt.savefig('residual.png')
+    # residual.dropna(inplace=True)
+    # print(residual)
+    # print(residual[residual["Value"]!=np.NaN])
+
+    query_ts = pd.to_datetime(timestamp, unit='s')
+    if np.isnan(residual.loc[query_ts, 'Value']):
+        raise Exception('invalid timestamp:', timestamp)
+
+    # print('query_ts')
+    # print(query_ts)
+    q_y = query_ts.year
+    q_m = query_ts.month
+    q_d = query_ts.day
+    q_h = query_ts.hour
+    # hour_start = int(time.mktime((q_y, q_m, q_d, q_h, 0, 0, 0, 0, 0)))
+    # hour_end = pd.to_datetime(datetime(q_y, q_m, q_d, q_h + 1))
+    tz_utc = datetime.timezone(datetime.timedelta(hours=0))
+    ts_start = int(datetime.datetime(q_y, q_m, q_d, q_h, 0, 0, tzinfo=tz_utc).timestamp())
+    # print('ts_start')
+    # print(datetime.datetime(q_y, q_m, q_d, q_h, 0, 0, tzinfo=tz_utc))
+    mean, mad = gaussiaonSameHourMad(df, residual, ts_start, win)
+    # print(mean)
+    # print(std)
+
+    return float(np.abs((residual.loc[query_ts, 'Value'] - mean))/mad)
 
 
 #根据已知miu和std的正态分布求x对应的概率密度
@@ -387,7 +512,7 @@ def norm(miu, std, x):
     return p
 
 
-def historical_average(df, timestamp, win=1):
+def historical_average(df, timestamp, win=1):#测试通过
     number_of_points = win * 24 * 60
     st = timestamp - number_of_points * 60 + 60
     ed = timestamp
@@ -412,8 +537,31 @@ def alg11(timestamp,df):
     pass
 
 
-def alg12(timestamp,df):
-    pass
+def svd(df, timestamp, row=10, col=3):#数据样本太少，太多时间戳的值为异常，测试未通过
+    #当前点和前面10个点，前面3周
+    try:
+        a_list = []
+        for num_of_day in range(col):  #col * 7
+            st = timestamp - row * 60 - num_of_day * 24 * 60 #一天前（以天为周期）
+            ed = timestamp - num_of_day * 24 * 60
+            a_list.append(df.loc[st:ed, "Value"].tolist())
+        print(np.asarray(a_list).shape)
+        u, s, vh = np.linalg.svd(np.asarray(a_list), full_matrices=False)
+        matrix_s = np.diag(s)
+        r = round(min(row, col) * 0.2) #col * 7
+        for i in range(min(r, len(s))):
+            matrix_s[i][i] = 0
+        print(matrix_s)
+        residual_matrix = np.dot(np.dot(u, matrix_s), vh)
+        last_column_list = [residual_matrix[i][col - 1] for i in range(1, col)]
+        miu = np.mean(last_column_list)
+        std = np.std(last_column_list)
+        print(miu, std, residual_matrix[0][col - 1])
+        print(norm(miu, std, residual_matrix[0][col - 1]))
+        return norm(miu, std, residual_matrix[0][col - 1])
+    except Exception as e:
+        print(e)
+    #    raise Exception
 
 
 def alg13(timestamp,df):
@@ -423,31 +571,114 @@ def alg13(timestamp,df):
 def alg14(timestamp,df):
     pass
 
+
+def gaussiaonSameHour(df, residual, ts_start, win):
+    ts_start = ts_start - win * 60
+    while ts_start - win * 60 in df.index:
+        ts_start = ts_start - win * 60
+
+    ts_end = ts_start + 60 * 60
+    ts_start_dt = pd.to_datetime(ts_start, unit='s')
+    ts_end_dt = pd.to_datetime(ts_end, unit='s')
+    # print(ts_start_dt)
+    # print(ts_end_dt)
+
+    temp_df = residual.loc[ts_start_dt:ts_end_dt, ['Value']]
+    # print(temp_df)
+    ts_start = ts_start + win * 60
+    ts_end = ts_start + 60 * 60
+
+    # temp_df = pd.concat([temp_df, residual.loc[ts_start_dt:ts_end_dt, ['Value']]])
+
+    while ts_end < int(df.index[-1]):
+        ts_start_dt = pd.to_datetime(ts_start, unit='s')
+        ts_end_dt = pd.to_datetime(ts_end, unit='s')
+        temp_df = pd.concat([temp_df, residual.loc[ts_start_dt:ts_end_dt, ['Value']]])
+        # print(ts_start_dt)
+        # print(ts_end_dt)
+        #     print(residual.loc[ts_start_dt:ts_end_dt, ['Value']])
+        ts_start = ts_start + win * 60
+        ts_end = ts_start + 60 * 60
+        # print(temp_df)
+
+    ts_start_dt = pd.to_datetime(ts_start, unit='s')
+    ts_end_dt = pd.to_datetime(ts_start + 60 * 60, unit='s')
+    if ts_start_dt in df.index and ts_end_dt not in df.index:
+        temp_df = pd.concat([temp_df, residual.loc[ts_start_dt:ts_end_dt, ['Value']]])
+
+    # print(temp_df)
+
+    mean = temp_df.mean()
+    std = temp_df.std()
+    return mean, std
+
+def gaussiaonSameHourMad(df, residual, ts_start, win):
+    ts_start = ts_start - win * 60
+    while ts_start - win * 60 in df.index:
+        ts_start = ts_start - win * 60
+
+    ts_end = ts_start + 60 * 60
+    ts_start_dt = pd.to_datetime(ts_start, unit='s')
+    ts_end_dt = pd.to_datetime(ts_end, unit='s')
+    # print(ts_start_dt)
+    # print(ts_end_dt)
+
+    temp_df = residual.loc[ts_start_dt:ts_end_dt, ['Value']]
+    # print(temp_df)
+    ts_start = ts_start + win * 60
+    ts_end = ts_start + 60 * 60
+
+    # temp_df = pd.concat([temp_df, residual.loc[ts_start_dt:ts_end_dt, ['Value']]])
+
+    while ts_end < int(df.index[-1]):
+        ts_start_dt = pd.to_datetime(ts_start, unit='s')
+        ts_end_dt = pd.to_datetime(ts_end, unit='s')
+        temp_df = pd.concat([temp_df, residual.loc[ts_start_dt:ts_end_dt, ['Value']]])
+        # print(ts_start_dt)
+        # print(ts_end_dt)
+        #     print(residual.loc[ts_start_dt:ts_end_dt, ['Value']])
+        ts_start = ts_start + win * 60
+        ts_end = ts_start + 60 * 60
+        # print(temp_df)
+
+    ts_start_dt = pd.to_datetime(ts_start, unit='s')
+    ts_end_dt = pd.to_datetime(ts_start + 60 * 60, unit='s')
+    if ts_start_dt in df.index and ts_end_dt not in df.index:
+        temp_df = pd.concat([temp_df, residual.loc[ts_start_dt:ts_end_dt, ['Value']]])
+
+    # print(temp_df)
+
+    mean = temp_df.mean()
+    # std = temp_df.std()
+    median = float(temp_df.median())
+    mad = temp_df["Value"].apply(lambda x: np.abs(x - median)).median()
+    return mean, mad
+
 def test(input_file):
     [a, b, c, d] = dataload(input_file)
     [e, f, g] = featuregenerate(a, b, c)
     return RFCrossValidation(e, f, g)
 
 if __name__ == '__main__':
-    #print([test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train101-m.csv"),
-    #       test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train102.csv"),
-    #       test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train103.csv"),
-    #       test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train104.csv"),
-    #       test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train105.csv"),
-    #       test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train106.csv"),
-    #       test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train107.csv"),
-    #       test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train108.csv"),
-    #       test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train109.csv"),
-    #       test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train110.csv"),
-    #       test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train111.csv"),
-    #       test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train112.csv"),
-    #       test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train113.csv"),
-    #       test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train114.csv"),
-    #       test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train115.csv"),])
+    print([test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train101-m.csv"),
+           test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train102.csv"),
+           test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train103.csv"),
+           test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train104.csv"),
+           test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train105.csv"),
+           test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train106.csv"),
+           test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train107.csv"),
+           test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train108.csv"),
+           test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train109.csv"),
+           test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train110.csv"),
+           test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train111.csv"),
+           test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train112.csv"),
+           test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train113.csv"),
+           test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train114.csv"),
+           test("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train115.csv"),])
 
-    [a,b,c,d] = dataload("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train101-m.csv")
-    [e,f,g] = featuregenerate(a,b,c)
-    print(RFCrossValidation(e,f,g))
+    #[a,b,c,d] = dataload("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train104.csv")
+    #[e,f,g] = featuregenerate(a,b,c)
+    #print(RFCrossValidation(e,f,g))
 
 
     #print(simple_ma(dataload()[0],1497427740,10))

@@ -3,6 +3,39 @@ import statistics as sta
 import math
 import numpy as np
 
+def dataload():
+    #加载数据
+    #df = pd.read_csv(inputfile,sep=',')
+    df = pd.read_csv("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train101-m.csv",sep=',')
+    #df = pd.read_csv("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train102.csv", sep=',')
+    #df = pd.read_csv("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train103.csv", sep=',')
+    #df = pd.read_csv("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train104.csv", sep=',')
+    #df = pd.read_csv("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train105.csv", sep=',')
+    #df = pd.read_csv("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train106.csv", sep=',')
+    #df = pd.read_csv("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train107.csv", sep=',')
+    #df = pd.read_csv("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train108.csv", sep=',')
+    #df = pd.read_csv("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train109.csv", sep=',')
+    #df = pd.read_csv("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train110.csv", sep=',')
+    #df = pd.read_csv("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train111.csv", sep=',')
+    #df = pd.read_csv("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train112.csv", sep=',')
+    #df = pd.read_csv("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train113.csv", sep=',')
+    #df = pd.read_csv("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train114.csv", sep=',')
+    #df = pd.read_csv("E:\\code-exercise\\outlierDetection\\dataSource\\Train\\Train\\train115.csv", sep=',')
+
+
+
+
+    #df["Timestamp"] = df["Timestamp"].astype("int")
+    #df["Label"]=df["Label"].astype("int")
+    #df["Value"] = df["Value"].astype("float64")
+    df_new = df.set_index("Timestamp") #原始训练数据集
+    df_positive=df_new[df_new["Label"].isin(["1"])]
+    ex_list = list(df_new["Label"])
+    ex_list.remove(1)
+    df_wholenegative=df_new[df_new["Label"].isin(ex_list)]
+    df_negative = df_new[df_new["Label"].isin(ex_list)].sample(800)
+    df_input=pd.concat([df_positive,df_negative]).sort_index(ascending=True)#采样后训练数据集
+    return [df_new,df_positive,df_wholenegative,df_input]
 
 def simple_ma(df, timestamp, win=10):
     st = timestamp - int(win / 2) * 60
@@ -90,8 +123,6 @@ def historical_average(df, timestamp, win=1):
     ed = timestamp
     try:
         val_list = df.loc[st:ed, "Value"].tolist()
-        if len(val_list) != number_of_points:
-            raise Exception
         miu = sta.mean(val_list)
         if len(val_list) == 1:
             std = 0
@@ -102,7 +133,8 @@ def historical_average(df, timestamp, win=1):
     except Exception:
         raise Exception
 
-#print(historical_average(df, 1400000000))
+#df = dataload()[0]
+#print(historical_average(df, 1502685720,5))
 
 
 def svd(df, timestamp, row=10, col=3):
@@ -135,8 +167,8 @@ def svd(df, timestamp, row=10, col=3):
 #print(svd(df, 1502685720))
 
 def holtwinters(df, timestamp, alpha, beta, gamma):
-    c = 24 * 60
-    try:
+        c = 24 * 60
+    #try:
         y = df.loc[:timestamp, "Value"].tolist()
 
         # Compute initial b and intercept using the first two complete c periods.
@@ -182,5 +214,8 @@ def holtwinters(df, timestamp, alpha, beta, gamma):
         #    print("forecast:", (At + Bt * (m + 1)) * S[ylen + m])
         forecast_val = (At + Bt) * S[ylen]
         return abs(forecast_val - df.loc[timestamp, "Value"])
-    except Exception:
-        raise Exception
+    #except Exception:
+    #    raise Exception
+
+df = dataload()[0]
+print(holtwinters(df, 1497116640,0.2,0.2,0.2))
