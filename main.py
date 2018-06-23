@@ -6,6 +6,8 @@ import statistics as sta
 import math
 import random
 import traceback
+
+from sklearn.model_selection import KFold
 from statsmodels.tsa.stattools import adfuller
 from statsmodels.tsa.arima_model import ARIMA
 from statsmodels.tsa.seasonal import seasonal_decompose
@@ -319,8 +321,17 @@ def RFCrossValidation(detectorsoption,df,feature_head):
 
         clf = RandomForestClassifier(n_jobs=2)
         #scores = cross_val_score(clf, features, target, cv=5)
-        scores = cross_val_score(clf, features, target,scoring='f1', cv=5)
-        return scores.mean()
+        kf = KFold(n_splits=5, shuffle=False)
+        scores_ac = cross_val_score(clf, features, target,scoring='accuracy', cv=kf)
+        scores_re = cross_val_score(clf, features, target, scoring='recall', cv=kf)
+        scores_pr = cross_val_score(clf, features, target, scoring='precision', cv=kf)
+        scores_f1 = cross_val_score(clf, features, target, scoring='f1', cv=kf)
+        result = [scores_ac.mean(),scores_re.mean(),scores_pr.mean(),scores_f1.mean()]
+        print(result)
+        file = open('data.txt', 'w')
+        file.write(str(result))
+        file.close()
+        return result
     except Exception as e:
         print(e)
 
@@ -343,7 +354,7 @@ def RFValueCrossValidation(df):
     return result
 
 
-
+#=============================下面为具体的detector===================================================
 
 def alg1(timestamp,df):
     pass
@@ -552,19 +563,19 @@ def svd(df, timestamp, row=10, col=3):#数据样本太少，太多时间戳的�
             st = timestamp - row * 60 - num_of_day * 24 * 60 #一天前（以天为周期）
             ed = timestamp - num_of_day * 24 * 60
             a_list.append(df.loc[st:ed, "Value"].tolist())
-        print(np.asarray(a_list).shape)
+        #print(np.asarray(a_list).shape)
         u, s, vh = np.linalg.svd(np.asarray(a_list), full_matrices=False)
         matrix_s = np.diag(s)
         r = round(min(row, col) * 0.2) #col * 7
         for i in range(min(r, len(s))):
             matrix_s[i][i] = 0
-        print(matrix_s)
+        #print(matrix_s)
         residual_matrix = np.dot(np.dot(u, matrix_s), vh)
         last_column_list = [residual_matrix[i][col - 1] for i in range(1, col)]
         miu = np.mean(last_column_list)
         std = np.std(last_column_list)
-        print(miu, std, residual_matrix[0][col - 1])
-        print(norm(miu, std, residual_matrix[0][col - 1]))
+        #print(miu, std, residual_matrix[0][col - 1])
+        #print(norm(miu, std, residual_matrix[0][col - 1]))
         return norm(miu, std, residual_matrix[0][col - 1])
     except Exception as e:
         print(e)
@@ -578,6 +589,8 @@ def alg13(timestamp,df):
 def alg14(timestamp,df):
     pass
 
+
+#=================================下面为detector当中用到的功能函数===================================
 
 def gaussiaonSameHour(df, residual, ts_start, win):
     ts_start = ts_start - win * 60
@@ -683,7 +696,7 @@ if __name__ == '__main__':
     #       test("dataSource\\Train\\Train\\train114.csv"),
     #       test("dataSource\\Train\\Train\\train115.csv"),])
 
-    [a,b,c,d] = dataload("dataSource\\Train\\Train\\train102.csv")
+    [a,b,c,d] = dataload("dataSource\\Train\\Train\\train105.csv")
     [e,f,g] = featuregenerate(a,b,c)
     print(RFCrossValidation(e,f,g))
 
