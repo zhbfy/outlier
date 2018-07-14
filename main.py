@@ -60,7 +60,7 @@ def dataload(inputfile):
 def featuregenerate(df_new,df_positive,df_wholenegative):
     #生成特征数据
     conf = configparser.ConfigParser()
-    conf.read("E:\\code-exercise\\outlierDetection\\detectors\\DetectorsConfig")
+    conf.read("detectors\\DetectorsConfig")
     detectorsoption = [conf.get("detectors", "Simple threshold"),
                  conf.get("detectors", "Diff"),
                  conf.get("detectors", "Simple MA"),
@@ -153,12 +153,12 @@ def featuregenerate(df_new,df_positive,df_wholenegative):
                 f65 = calculateTSD(df_new,index , 5*7*24)
                 feature_insert = feature_insert + [f61, f62, f63, f64, f65]
             if detectorsoption[7] == "1":  # TSD MAD
-                f61 = calculateTSDmad(df_new,index , 7*24)
-                f62 = calculateTSDmad(df_new,index , 2*7*24)
-                f63 = calculateTSDmad(df_new,index , 3*7*24)
-                f64 = calculateTSDmad(df_new,index , 4*7*24)
-                f65 = calculateTSDmad(df_new,index , 5*7*24)
-                feature_insert = feature_insert + [f61, f62, f63, f64, f65]
+                f71 = calculateTSDmad(df_new,index , 7*24)
+                f72 = calculateTSDmad(df_new,index , 2*7*24)
+                f73 = calculateTSDmad(df_new,index , 3*7*24)
+                f74 = calculateTSDmad(df_new,index , 4*7*24)
+                f75 = calculateTSDmad(df_new,index , 5*7*24)
+                feature_insert = feature_insert + [f71, f72, f73, f74, f75]
             if detectorsoption[8] == "1":  # Historical averag
                 f81 = historical_average(df_new, index, 1)
                 f82 = historical_average(df_new, index, 2)
@@ -234,12 +234,12 @@ def featuregenerate(df_new,df_positive,df_wholenegative):
                 f65 = calculateTSD(df_new,index , 5*7*24)
                 feature_insert = feature_insert + [f61, f62, f63, f64, f65]
             if detectorsoption[7] == "1":  # TSD MAD
-                f61 = calculateTSDmad(df_new,index , 7*24)
-                f62 = calculateTSDmad(df_new,index , 2*7*24)
-                f63 = calculateTSDmad(df_new,index , 3*7*24)
-                f64 = calculateTSDmad(df_new,index , 4*7*24)
-                f65 = calculateTSDmad(df_new,index , 5*7*24)
-                feature_insert = feature_insert + [f61, f62, f63, f64, f65]
+                f71 = calculateTSDmad(df_new,index , 7*24)
+                f72 = calculateTSDmad(df_new,index , 2*7*24)
+                f73 = calculateTSDmad(df_new,index , 3*7*24)
+                f74 = calculateTSDmad(df_new,index , 4*7*24)
+                f75 = calculateTSDmad(df_new,index , 5*7*24)
+                feature_insert = feature_insert + [f71, f72, f73, f74, f75]
             if detectorsoption[8] == "1":  # Historical averag
                 f81 = historical_average(df_new, index, 1)
                 f82 = historical_average(df_new, index, 2)
@@ -683,15 +683,15 @@ def gaussiaonSameHourMad(df, residual, ts_start, win):
     return mean, mad
 
 def test(input_file):
-    [a, b, c, d] = dataload(input_file)
-    [e, f, g] = featuregenerate(a, b, c)
+    [a,b,c,d] = dataload("dataSource\\Train\\Train\\train105.csv")
+    [e,f,g] = featuregenerate(a,b,c)
     return RFCrossValidation(e, f, input_file)
 
 if __name__ == '__main__':
-    #print([test("dataSource\\Train\\Train\\train101-m.csv"),
-    #       test("dataSource\\Train\\Train\\train102.csv"),
-    #       test("dataSource\\Train\\Train\\train103.csv"),
-    #       test("dataSource\\Train\\Train\\train104.csv"),
+    print([test("dataSource\\Train\\Train\\train101-m.csv"),
+           test("dataSource\\Train\\Train\\train102.csv"),
+           test("dataSource\\Train\\Train\\train103.csv"),
+           test("dataSource\\Train\\Train\\train104.csv"),
     #       test("dataSource\\Train\\Train\\train105.csv"),
     #       test("dataSource\\Train\\Train\\train106.csv"),
     #       test("dataSource\\Train\\Train\\train107.csv"),
@@ -702,11 +702,12 @@ if __name__ == '__main__':
     #       test("dataSource\\Train\\Train\\train112.csv"),
     #       test("dataSource\\Train\\Train\\train113.csv"),
     #       test("dataSource\\Train\\Train\\train114.csv"),
-    #       test("dataSource\\Train\\Train\\train115.csv"),])
+    #       test("dataSource\\Train\\Train\\train115.csv")
+           ])
 
-    [a,b,c,d] = dataload("dataSource\\Train\\Train\\train105.csv")
-    [e,f,g] = featuregenerate(a,b,c)
-    print(RFCrossValidation(e,f,"dataSource\\Train\\Train\\train105.csv"))
+    #[a,b,c,d] = dataload("dataSource\\Train\\Train\\train105.csv")
+    #[e,f,g] = featuregenerate(a,b,c)
+    #print(RFCrossValidation(e,f,"dataSource\\Train\\Train\\train105.csv"))
 
 
     #print(simple_ma(dataload()[0],1497427740,10))
