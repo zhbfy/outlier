@@ -11,6 +11,7 @@ df.head()
 
 train, test = df[df['is_train']==True], df[df['is_train']==False]
 
+
 features = df.columns[:4]
 clf = RandomForestClassifier(n_jobs=2)
 y, _ = pd.factorize(train['species'])
